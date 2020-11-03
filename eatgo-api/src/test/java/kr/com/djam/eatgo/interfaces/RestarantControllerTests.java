@@ -1,5 +1,6 @@
 package kr.com.djam.eatgo.interfaces;
 
+import kr.com.djam.eatgo.application.RestaurantService;
 import kr.com.djam.eatgo.domain.MenuItemRepository;
 import kr.com.djam.eatgo.domain.MenuItemRepositoryImpl;
 import kr.com.djam.eatgo.domain.RestaurantRepository;
@@ -26,6 +27,9 @@ class RestarantControllerTests {
 
     @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @SpyBean(MenuItemRepositoryImpl.class)
     private MenuItemRepository menuItemRepository;
