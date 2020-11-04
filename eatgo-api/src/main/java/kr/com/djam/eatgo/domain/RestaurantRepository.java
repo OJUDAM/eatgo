@@ -6,4 +6,6 @@ public interface RestaurantRepository {
     List<Restaurant> findAll();
 
     Restaurant findById(Long id);
+
+    void add(Restaurant restaurant);
 }

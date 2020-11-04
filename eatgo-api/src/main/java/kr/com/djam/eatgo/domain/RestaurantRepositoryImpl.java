@@ -27,4 +27,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
                 .orElse(null);
         return restaurant;
     }
+
+    @Override
+    public void add(Restaurant restaurant) {
+        restaurants.add(restaurant);
+    }
 }
