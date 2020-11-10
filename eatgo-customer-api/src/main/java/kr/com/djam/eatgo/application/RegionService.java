@@ -21,9 +21,4 @@ public class RegionService {
         return regionRepository.findAll();
     }
 
-    public Region addRegion(String name) {
-        Region region = Region.builder().name(name).build();
-        System.out.println(region.getName());
-        return regionRepository.save(region);
-    }
 }
