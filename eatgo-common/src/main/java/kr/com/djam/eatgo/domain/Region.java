@@ -2,6 +2,7 @@ package kr.com.djam.eatgo.domain;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Region {
 
     @Id
