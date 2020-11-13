@@ -28,6 +28,15 @@ class RegionServiceTests {
         MockitoAnnotations.initMocks(this);
         regionService = new RegionService(regionRepository);
     }
+
+    @Test
+    public void addRegion(){
+
+        Region region = regionService.addRegion("Seoul");
+        verify(regionRepository).save(any());
+
+        assertThat(region.getName(),is("Seoul"));
+    }
     @Test
     public void getRegions(){
         List<Region> mockRegions = new ArrayList<>();
@@ -40,11 +49,5 @@ class RegionServiceTests {
         assertThat(region.getName(), is("Seoul"));
     }
 
-    @Test
-    public void addRegion(){
-        Region region = regionService.addRegion("Seoul");
 
-        verify(regionRepository).save(any());
-        assertThat(region.getName(),is("Seoul"));
-    }
 }
