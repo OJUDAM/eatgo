@@ -37,13 +37,14 @@ class RestaurantControllerTests {
         List<Restaurant> restaurants = new ArrayList<>();
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("JOKER House")
                 .address("Seoul")
                 .build();
         restaurants.add(restaurant);
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
-        mvc.perform(get("/restaurants"))
+        mvc.perform(get("/restaurants?region=Seoul&category=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         containsString("\"id\":1004")))
@@ -92,7 +93,7 @@ class RestaurantControllerTests {
 
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\" : \"BeRyong\",\"address\" : \"Seoul\"}"))
+                .content("{\"name\" : \"BeRyong\",\"categoryId\" : 1,\"address\" : \"Seoul\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location","/restaurants/1234"))
                 .andExpect(content().string("{}"));
@@ -104,9 +105,10 @@ class RestaurantControllerTests {
 
     @Test
     public void updateWithValidData() throws Exception {
+
         mvc.perform(patch("/restaurants/1004")
             .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"name\":\"JOKER bar\",\"address\":\"Busan\"}"))
+            .content("{\"name\":\"JOKER bar\",\"categoryId\":1,\"address\":\"Busan\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L,"JOKER bar","Busan");
@@ -114,9 +116,10 @@ class RestaurantControllerTests {
     }
     @Test
     public void updateWithInvalidData() throws Exception {
+
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"\",\"address\":\"\"}"))
+                .content("{\"name\":\"\",\"categoryId\":,\"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
     }
 }

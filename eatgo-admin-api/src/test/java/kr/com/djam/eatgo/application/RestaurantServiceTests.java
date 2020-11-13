@@ -38,13 +38,14 @@ class RestaurantServiceTests {
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
                 .name("Bob zip")
+                .categoryId(1L)
                 .address("Seoul")
                 .menuItems(new ArrayList<MenuItem>())
                 .build();
 
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAll()).willReturn(restaurants);
+        given(restaurantRepository.findAllByAddressContainingAndCategoryId("Seoul",1L)).willReturn(restaurants);
 
         given(restaurantRepository.findById(1004L)).willReturn(java.util.Optional.of(restaurant));
 
@@ -52,7 +53,7 @@ class RestaurantServiceTests {
 
     @Test
     public void getRestaruantsWithExisted(){
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        List<Restaurant> restaurants = restaurantService.getRestaurants("Seoul",1L);
 
         Restaurant restaurant = restaurants.get(0);
         assertThat(restaurant.getId(),is(1004L));

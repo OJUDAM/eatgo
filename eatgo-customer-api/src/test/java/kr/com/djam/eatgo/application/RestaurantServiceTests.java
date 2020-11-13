@@ -1,6 +1,5 @@
 package kr.com.djam.eatgo.application;
 
-import kr.com.djam.eatgo.application.RestaurantService;
 import kr.com.djam.eatgo.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,6 +63,7 @@ class RestaurantServiceTests {
         List<Restaurant> restaurants = new ArrayList<>();
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(3L)
                 .name("Bob zip")
                 .address("Seoul")
                 .menuItems(new ArrayList<MenuItem>())
@@ -71,7 +71,7 @@ class RestaurantServiceTests {
 
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAll()).willReturn(restaurants);
+        given(restaurantRepository.findAllByAddressContainingAndCategoryId("Seoul",3L)).willReturn(restaurants);
 
         given(restaurantRepository.findById(1004L)).willReturn(java.util.Optional.of(restaurant));
 
@@ -79,7 +79,7 @@ class RestaurantServiceTests {
 
     @Test
     public void getRestaruantsWithExisted(){
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        List<Restaurant> restaurants = restaurantService.getRestaurants("Seoul",3L);
 
         Restaurant restaurant = restaurants.get(0);
         assertThat(restaurant.getId(),is(1004L));

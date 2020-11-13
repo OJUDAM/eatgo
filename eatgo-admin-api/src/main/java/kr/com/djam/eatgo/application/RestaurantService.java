@@ -29,6 +29,16 @@ public class RestaurantService {
 
         return restaurants;
     }
+    public List<Restaurant> getRestaurants(String region) {
+        List<Restaurant> restaurants = restaurantRepository.findAllByAddressContaining(region);
+
+        return restaurants;
+    }
+    public List<Restaurant> getRestaurants(String region,Long categoryId) {
+        List<Restaurant> restaurants = restaurantRepository.findAllByAddressContainingAndCategoryId(region,categoryId);
+
+        return restaurants;
+    }
 
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);

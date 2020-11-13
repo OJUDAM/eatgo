@@ -3,10 +3,7 @@ package kr.com.djam.eatgo.interfaces;
 import kr.com.djam.eatgo.application.RestaurantService;
 import kr.com.djam.eatgo.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +15,12 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+
     @GetMapping("/restaurants")
-    public List<Restaurant> list(){
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+    public List<Restaurant> list(
+            @RequestParam("region") String region,
+            @RequestParam("category") Long categoryId){
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region,categoryId);
         return restaurants;
     }
 
