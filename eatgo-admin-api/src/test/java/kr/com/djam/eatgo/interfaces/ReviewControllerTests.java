@@ -31,10 +31,10 @@ class ReviewControllerTests {
    @Test
     public void list() throws Exception {
        List<Review> reviews = new ArrayList<>();
-       reviews.add(Review.builder().description("Cool").build());
+       reviews.add(Review.builder().description("cool").build());
        given(reviewService.getReviews()).willReturn(reviews);
        mvc.perform(get("/reviews"))
                .andExpect(status().isOk())
-               .andExpect(content().string(containsString("Cool")));
+               .andExpect(content().string(containsString("cool")));
    }
 }

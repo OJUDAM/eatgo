@@ -14,7 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 class RegionServiceTests {
 
@@ -31,22 +30,25 @@ class RegionServiceTests {
 
     @Test
     public void addRegion(){
+        Region mockRegion = Region.builder()
+                .name("Seoul")
+                .build();
+        given(regionRepository.save(any())).willReturn(mockRegion);
 
         Region region = regionService.addRegion("Seoul");
-        verify(regionRepository).save(any());
 
         assertThat(region.getName(),is("Seoul"));
     }
     @Test
     public void getRegions(){
         List<Region> mockRegions = new ArrayList<>();
-        mockRegions.add(Region.builder().name("Seoul").build());
+        mockRegions.add(Region.builder().name("서울").build());
 
         given(regionRepository.findAll()).willReturn(mockRegions);
         List<Region> regions = regionService.getRegions();
 
         Region region = regions.get(0);
-        assertThat(region.getName(), is("Seoul"));
+        assertThat(region.getName(), is("서울"));
     }
 
 

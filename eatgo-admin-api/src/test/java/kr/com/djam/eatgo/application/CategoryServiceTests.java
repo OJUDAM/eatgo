@@ -14,7 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 class CategoryServiceTests {
 
@@ -31,9 +30,13 @@ class CategoryServiceTests {
 
     @Test
     public void addCategory(){
+        Category mockCategory = Category.builder()
+                .name("Seoul")
+                .build();
+        given(categoryRepository.save(any())).willReturn(mockCategory);
 
         Category category = categoryService.addCategory("Seoul");
-        verify(categoryRepository).save(any());
+
 
         assertThat(category.getName(),is("Seoul"));
     }
