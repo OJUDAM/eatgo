@@ -26,6 +26,7 @@ public class UserService {
         User user = User.builder()
                 .name(name)
                 .email(email)
+                .level(1L)
                 .build();
         return userRepository.save(user);
     }
@@ -38,5 +39,14 @@ public class UserService {
        user.setLevel(level);
 
        return user;
+    }
+
+    public User deactiveUser(long id) {
+        //TODO : 실제로 일어날 일
+        User user = userRepository.findById(id).orElse(null);
+
+        user.deactivate();
+
+        return user;
     }
 }

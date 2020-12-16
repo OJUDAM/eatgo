@@ -85,4 +85,25 @@ class UserServiceTests {
 
         assertThat(user.getName(), is("Djam"));
     }
+
+    @Test
+    public void deactiveUser(){
+        Long id = 1004L;
+        Long level = 100L;
+
+        User mockUser = User.builder()
+                .id(id)
+                .email("admin@example.com")
+                .name("Administrator")
+                .level(level)
+                .build();
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
+
+        User user =  userService.deactiveUser(1004L);
+
+        verify(userRepository).findById(1004L);
+
+        assertThat(user.isAdmin(), is(false));
+        assertThat(user.isActive(), is(false));
+    }
 }
