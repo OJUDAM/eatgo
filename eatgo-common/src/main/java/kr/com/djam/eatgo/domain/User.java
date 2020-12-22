@@ -20,6 +20,7 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    private String password;
 
     @NotEmpty
     private String email;
