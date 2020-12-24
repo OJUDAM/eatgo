@@ -42,11 +42,12 @@ public class UserService {
     }
 
     public User deactiveUser(long id) {
-        //TODO : 실제로 일어날 일
         User user = userRepository.findById(id).orElse(null);
 
         user.deactivate();
 
         return user;
     }
+
+
 }

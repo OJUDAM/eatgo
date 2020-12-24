@@ -14,11 +14,14 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    @Autowired
     UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(String email, String name, String password){
@@ -37,7 +40,18 @@ public class UserService {
                 .level(1L)
                 .build();
 
-        System.out.println(user.getId() + " : " + user.getEmail());
         return userRepository.save(user);
+    }
+
+    public User authenticate(String email, String password) {
+        System.out.println("서비스");
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new EmailNotExistedException(email));
+
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new PasswordWrongException();
+        }
+
+        return user;
     }
 }
